@@ -7,14 +7,10 @@ services:
       - 8096:8096/tcp
       - 7359:7359/udp
     volumes:
-      - /home/john/containers/jellyfin/config:/config
-      - /home/john/containers/jellyfin/cache:/cache
+      - ./config:/config
+      - ./config:/cache
       - type: bind
         source: /mnt/pool/Multimedia
         target: /media
-        read_only: true
-      - type: bind
-        source: /path/to/fonts
-        target: /usr/local/share/fonts/custom
         read_only: true
     restart: 'unless-stopped'
