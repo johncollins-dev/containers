@@ -6,6 +6,8 @@ services:
     ports:
       - 8096:8096/tcp
       - 7359:7359/udp
+    networks:
+      - proxy
     volumes:
       - ./config:/config
       - ./config:/cache
@@ -14,3 +16,7 @@ services:
         target: /media
         read_only: true
     restart: 'unless-stopped'
+
+networks:
+  proxy:
+    external: true
