@@ -11,7 +11,7 @@ services:
       - ./data:/data
       - ./config:/config
 
-    netowrks:
+    networks:
       - proxy
 
 networks:
