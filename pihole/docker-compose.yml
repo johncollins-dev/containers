@@ -6,6 +6,7 @@ services:
     environment:
       TZ: 'America/Los_Angeles'
       FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD}
+      FTLCONF_webserver_port: ${WEBSERVER_PORT}
       FTLCONF_dns_listeningMode: 'ALL'
     volumes:
       - './etc-pihole:/etc/pihole'
