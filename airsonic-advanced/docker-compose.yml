@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    container_name: airsonic-advanced-db
+    volumes:
+      - ${DB_PATH}:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: unless-stopped
+  airsonic:
+    image: airsonicadvanced/airsonic-advanced:latest
+    container_name: airsonic-advanced
+    environment:
+      spring_datasource_url: 'jdbc:postgresql://db:5432/postgres?stringtype=unspecified&raiseExceptionOnSilentRollback=false'
+      spring_datasource_username: ${DB_USER}
+      spring_datasource_password: ${DB_PASSWORD}
+      spring_liquibase_parameters_userTableQuote: '"'
+      JAVA_OPTS: '-Xms512m -Xmx2g -XX:+UseG1GC'
+    volumes:
+      - ${MEDIA}:/var/music:ro
+      - ${CONFIG}:/var/airsonic
+    ports:
+      - 4040:4040
+      - 4041:4041
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
