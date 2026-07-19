@@ -1,0 +1,4 @@
+tv.node804 {
+	tls internal
+	reverse_proxy jellyfin:8096
+}
