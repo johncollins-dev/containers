@@ -9,6 +9,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
+    networks:
+      - proxy
   airsonic:
     image: airsonicadvanced/airsonic-advanced:latest
     container_name: airsonic-advanced
