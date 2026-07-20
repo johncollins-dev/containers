@@ -2,3 +2,7 @@ tv.node804 {
 	tls internal
 	reverse_proxy jellyfin:8096
 }
+music.node804 {
+	tls internal
+	reverse_proxy airsonic-advanced:4040
+}

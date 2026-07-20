@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:16
     container_name: airsonic-advanced-db
+    user: ${PID}:${GID}
     volumes:
       - ${DB_PATH}:/var/lib/postgresql/data
     environment:
@@ -19,7 +20,8 @@ services:
       spring_datasource_username: ${DB_USER}
       spring_datasource_password: ${DB_PASSWORD}
       spring_liquibase_parameters_userTableQuote: '"'
-      JAVA_OPTS: '-Xms512m -Xmx2g -XX:+UseG1GC'
+      JAVA_OPTS: '-Dserver.forward-headers-strategy=native -Xms512m -Xmx2g -XX:+UseG1GC'
+    user: ${PID}:${GID}
     volumes:
       - ${MEDIA}:/var/music:ro
       - ${CONFIG}:/var/airsonic
