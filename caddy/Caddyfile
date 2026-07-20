@@ -6,3 +6,7 @@ music.node804 {
 	tls internal
 	reverse_proxy airsonic-advanced:4040
 }
+rss.node804 {
+    tls internal
+    reverse_proxy ttrss-web:8280
+}
