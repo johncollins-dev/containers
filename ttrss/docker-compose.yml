@@ -1,0 +1,95 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: ttrss-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${TTRSS_DB_USER}
+      - POSTGRES_PASSWORD=${TTRSS_DB_PASS}
+      - POSTGRES_DB=${TTRSS_DB_NAME}
+    volumes:
+      - ttrss-db:/var/lib/postgresql/data
+    networks:
+      - ttrss-internal
+
+  app:
+    image: supahgreg/tt-rss:latest
+    container_name: ttrss-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - ttrss-app:/var/www/html
+      - ./config.d:/opt/tt-rss/config.d:ro
+    depends_on:
+      - db
+
+    networks:
+      - ttrss-internal
+
+  updater:
+    image: supahgreg/tt-rss:latest
+    container_name: ttrss-updater
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - ttrss-app:/var/www/html
+      - ./config.d:/opt/tt-rss/config.d:ro
+    depends_on:
+      - app
+    networks:
+      - ttrss-internal
+    command: /opt/tt-rss/updater.sh
+
+  web:
+    image: supahgreg/tt-rss-web-nginx:latest
+    container_name: ttrss-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - ttrss-app:/var/www/html:ro
+    depends_on:
+      - app
+    networks:
+      - proxy
+      - ttrss-internal
+
+  backups:
+    image: supahgreg/tt-rss:latest
+    container_name: ttrss-backups
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: America/Los_Angeles
+    volumes:
+      - ttrss-backups:/backups
+      - ttrss-app:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - ttrss-internal
+    command: /opt/tt-rss/dcron.sh -f
+
+volumes:
+  ttrss-db:
+  ttrss-app:
+  ttrss-backups:
+
+networks:
+  proxy:
+    external: true
+
+  ttrss-internal:
+    internal: true
+
