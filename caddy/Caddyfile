@@ -10,3 +10,7 @@ rss.node804 {
     tls internal
     reverse_proxy ttrss-web:8280
 }
+pgadmin.node804 {
+    tls internal
+    reverse_proxy pgadmin:5050
+}
