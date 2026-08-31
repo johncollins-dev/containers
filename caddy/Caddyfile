@@ -12,5 +12,5 @@ rss.node804 {
 }
 pgadmin.node804 {
     tls internal
-    reverse_proxy pgadmin:5050
+    reverse_proxy pgadmin:80
 }
