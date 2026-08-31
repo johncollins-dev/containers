@@ -1,0 +1,25 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DEFAULT_PASSWORD}
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+    networks:
+      - proxy
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  pgadmin_data:
+
+networks:
+  proxy:
+    external: true
