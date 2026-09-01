@@ -8,7 +8,7 @@ music.node804 {
 }
 rss.node804 {
     tls internal
-    reverse_proxy ttrss-web:8280
+    reverse_proxy ttrss-web:80
 }
 pgadmin.node804 {
     tls internal
