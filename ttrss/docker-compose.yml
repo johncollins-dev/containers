@@ -97,5 +97,3 @@ networks:
     external: true
 
   ttrss-internal:
-    internal: true
-
