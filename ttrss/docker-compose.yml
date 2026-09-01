@@ -22,6 +22,9 @@ services:
       - .env
     environment:
       TZ: America/Los_Angeles
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - ttrss-app:/var/www/html
       - ./config.d:/opt/tt-rss/config.d:ro
@@ -56,6 +59,9 @@ services:
       - .env
     environment:
       TZ: America/Los_Angeles
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - ttrss-app:/var/www/html:ro
     depends_on:
