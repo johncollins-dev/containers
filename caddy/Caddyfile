@@ -14,3 +14,5 @@ pgadmin.node804 {
     tls internal
     reverse_proxy pgadmin:80
 }
+
+import private/*
