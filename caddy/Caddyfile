@@ -22,5 +22,9 @@ git.node804 {
     tls internal
     reverse_proxy gitea:3000
 }
+cloud.node804 {
+    tls internal
+    reverse_proxy nextcloud:80
+}
 
 import private/*
