@@ -8,9 +8,9 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=nextcloud-db
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      POSTGRES_DB: nextcloud-db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
   
   redis:
     image: redis:alpine
@@ -30,15 +30,15 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - POSTGRES_DB: nextcloud-db
-      - POSTGRES_USER: ${DB_USER}
-      - POSTGRES_PASSWORD: ${DB_PASSWORD}
-      - POSTGRES_HOST: db
-      - REDIS_HOST: redis
-      - REDIS_HOST_PASSWORD: ${REDIS_PASSWORD}
-      - NEXTCLOUD_ADMIN_USER: ${ADMIN_USER}
-      - NEXTCLOUD_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      - NEXTCLOUD_TRUSTED_DOMAINS: cloud.node804
+      POSTGRES_DB: nextcloud-db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: db
+      REDIS_HOST: redis
+      REDIS_HOST_PASSWORD: ${REDIS_PASSWORD}
+      NEXTCLOUD_ADMIN_USER: ${ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: cloud.node804
     depends_on:
       - db
       - redis
