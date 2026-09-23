@@ -14,5 +14,9 @@ pgadmin.node804 {
     tls internal
     reverse_proxy pgadmin:80
 }
+code.node804 {
+    tls internal
+    reverse_proxy code-server:8080
+}
 
 import private/*

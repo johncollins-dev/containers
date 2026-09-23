@@ -1,0 +1,20 @@
+services:
+  code-server:
+    image: codercom/code-server:4.138.0-39
+    container_name: code-server
+    user: "${UID}:${GID}"
+    networks:
+      - proxy
+    volumes:
+      - "${LOCAL}:/home/coder/.local"
+      - "${CONFIG}:/home/coder/.config"
+      - "${WORKSPACE}:/home/coder/project"
+    environment:
+      DOCKER_USER: "${USER}"
+      PASSWORD: "${PASSWORD}"
+      DISABLE_TELEMETRY: true
+    restart: 'unless-stopped'
+
+networks:
+  proxy:
+    external: true
