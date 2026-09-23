@@ -18,5 +18,9 @@ code.node804 {
     tls internal
     reverse_proxy code-server:8080
 }
+git.node804 {
+    tls internal
+    reverse_proxy gitea:3000
+}
 
 import private/*
