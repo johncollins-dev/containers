@@ -26,5 +26,9 @@ cloud.node804 {
     tls internal
     reverse_proxy nextcloud:80
 }
+books.node804 {
+    tls internal
+    reverse_proxy kavita:5000
+}
 
 import private/*
