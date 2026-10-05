@@ -1,0 +1,57 @@
+services:
+
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:v3.18.1
+    container_name: woodpecker-server
+    restart: unless-stopped
+
+    volumes:
+      - woodpecker-server-data:/var/lib/woodpecker
+
+    environment:
+      WOODPECKER_HOST: ${WOODPECKER_HOST}
+      WOODPECKER_OPEN: "true"
+      WOODPECKER_GITEA: "true"
+      WOODPECKER_GITEA_URL: ${WOODPECKER_GITEA_URL}
+      WOODPECKER_GITEA_CLIENT: ${WOODPECKER_GITEA_CLIENT}
+      WOODPECKER_GITEA_SECRET: ${WOODPECKER_GITEA_SECRET}
+      WOODPECKER_AGENT_SECRET: ${WOODPECKER_AGENT_SECRET}
+      WOODPECKER_SERVER_ADDR: 0.0.0.0:8000
+      WOODPECKER_GRPC_ADDR: 0.0.0.0:9000
+
+    networks:
+      - proxy
+
+
+  woodpecker-agent:
+    image: woodpeckerci/woodpecker-agent:v3.18.1
+    container_name: woodpecker-agent
+    restart: unless-stopped
+    command: agent
+
+    depends_on:
+      - woodpecker-server
+
+    volumes:
+      - woodpecker-agent-config:/etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    environment:
+      WOODPECKER_SERVER: woodpecker-server:9000
+      WOODPECKER_AGENT_SECRET: ${WOODPECKER_AGENT_SECRET}
+      WOODPECKER_BACKEND: docker
+      WOODPECKER_BACKEND_DOCKER_NETWORK: proxy
+      WOODPECKER_MAX_WORKFLOWS: 1
+
+    networks:
+      - proxy
+
+
+volumes:
+  woodpecker-server-data:
+  woodpecker-agent-config:
+
+
+networks:
+  proxy:
+    external: true

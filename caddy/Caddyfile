@@ -30,5 +30,8 @@ books.node804 {
     tls internal
     reverse_proxy kavita:5000
 }
+ci.node804 {
+    reverse_proxy woodpecker-server:8000
+}
 
 import private/*
